@@ -6,6 +6,10 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+        
+    def save(self, *args, **kwargs):
+        self.name = self.name.lower()
+        return super(Category, self).save(*args, **kwargs)
 
 class Quiz(models.Model):
     title = models.CharField(max_length=250)
@@ -14,6 +18,10 @@ class Quiz(models.Model):
 
     def __str__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        self.title = self.title.lower()
+        return super(Quiz, self).save(*args, **kwargs)
 
 class Question(models.Model):
     title = models.CharField(max_length=255)
@@ -30,8 +38,12 @@ class Question(models.Model):
     def __str__(self):
         return self.title
 
+    def save(self, *args, **kwargs):
+        self.title = self.title.lower()
+        return super(Question, self).save(*args, **kwargs)
+
 class Answer(models.Model):
-    anwer_text = models.CharField(max_length=255)
+    answer_text = models.CharField(max_length=255)
     question_id = models.ForeignKey(Question, on_delete=models.CASCADE)
     is_right= models.BooleanField()
     date_updated = models.DateField(auto_now=True)
